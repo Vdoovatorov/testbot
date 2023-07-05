@@ -3,7 +3,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 let users = [];
 
 bot.start((ctx) => {
-    ctx.reply('Добро пожаловать! Пожалуйста, введите свое имя:', Markup.forceReply().extra());
+    ctx.reply('Добро пожаловать! Пожалуйста, введите свое имя:', Markup.forceReply());
 });
 
 bot.on('text', (ctx) => {
@@ -14,10 +14,10 @@ bot.on('text', (ctx) => {
     }
     if (!user.name) {
         user.name = ctx.message.text;
-        ctx.reply(`Привет, ${user.name}! Пожалуйста, укажите свой пол:`, Markup.keyboard(['Мужской', 'Женский']).oneTime().resize().extra());
+        ctx.reply(`Привет, ${user.name}! Пожалуйста, укажите свой пол:`, Markup.keyboard(['Мужской', 'Женский']).oneTime().resize());
     } else if (!user.gender) {
         user.gender = ctx.message.text;
-        ctx.reply(`Спасибо, ${user.name}! Теперь укажите свой возраст:`, Markup.forceReply().extra());
+        ctx.reply(`Спасибо, ${user.name}! Теперь укажите свой возраст:`, Markup.forceReply());
     } else if (!user.age) {
         user.age = parseInt(ctx.message.text);
         if (user.age < 16 || user.age > 90) {
@@ -28,7 +28,7 @@ bot.on('text', (ctx) => {
                 ['Найти мужчину', 'Найти женщину'],
                 ['Найти кого-то моего возраста', 'Найти кого-то младше меня', 'Найти кого-то старше меня'],
                 ['Остановить поиск']
-            ]).resize().extra());
+            ]).resize());
         }
     } else if (!user.partnerId) {
         let partner;
@@ -53,7 +53,7 @@ bot.on('text', (ctx) => {
                     ['Найти мужчину', 'Найти женщину'],
                     ['Найти кого-то моего возраста', 'Найти кого-то младше меня', 'Найти кого-то старше меня'],
                     ['Остановить поиск']
-                ]).resize().extra());
+                ]).resize());
                 return;
         }
         if (partner) {
@@ -61,10 +61,10 @@ bot.on('text', (ctx) => {
             partner.partnerId = user.id;
             ctx.reply(`Вы нашли собеседника! Его имя ${partner.name}, пол ${partner.gender}, возраст ${partner.age}. Начните общение!`, Markup.keyboard([
                 ['Завершить чат']
-            ]).resize().extra());
+            ]).resize());
             bot.telegram.sendMessage(partner.id, `Вы нашли собеседника! Его имя ${user.name}, пол ${user.gender}, возраст ${user.age}. Начните общение!`, Markup.keyboard([
                 ['Завершить чат']
-            ]).resize().extra());
+            ]).resize());
         } else {
             ctx.reply('Извините, но мы не смогли найти подходящего собеседника. Попробуйте еще раз позже.');
         }
@@ -75,12 +75,12 @@ bot.on('text', (ctx) => {
                 ['Найти мужчину', 'Найти женщину'],
                 ['Найти кого-то моего возраста', 'Найти кого-то младше меня', 'Найти кого-то старше меня'],
                 ['Остановить поиск']
-            ]).resize().extra());
+            ]).resize());
             bot.telegram.sendMessage(partner.id, `${user.name} завершил чат с вами. Вы можете начать новый поиск, используя кнопки ниже:`, Markup.keyboard([
                 ['Найти мужчину', 'Найти женщину'],
                 ['Найти кого-то моего возраста', 'Найти кого-то младше меня', 'Найти кого-то старше меня'],
                 ['Остановить поиск']
-            ]).resize().extra());
+            ]).resize());
             user.partnerId = null;
             partner.partnerId = null;
         } else {
