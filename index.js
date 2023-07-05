@@ -1,7 +1,6 @@
 const Telegraf = require('telegraf');
 const Markup = require('telegraf/markup');
-const bot = new Telegraf(process.env.6329304037:AAGZRDtfUP8bHP4J9qD3Qh8ruiV8FauvFAY);
-
+const bot = new Telegraf(process.env.BOT_TOKEN);
 let users = [];
 
 bot.start((ctx) => {
